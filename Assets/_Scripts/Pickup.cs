@@ -1,0 +1,72 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Pickup : MonoBehaviour
+{
+    private GameObject playerCamera;
+    private GameObject carriedObj;
+
+    private bool isCarrying;
+
+    public float distance;
+    public float smoother;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
+        isCarrying = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (isCarrying)
+        {
+            CarryObject(carriedObj);
+            DropObject();
+        }
+        else
+        {
+            PickupObject();
+        }
+    }
+
+    private void CarryObject(GameObject obj)
+    {
+        obj.transform.position = Vector3.Lerp(obj.transform.position, playerCamera.transform.position + playerCamera.transform.forward * distance, Time.deltaTime * smoother);
+    }
+
+    private void PickupObject()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            int x = Screen.width / 2;
+            int y = Screen.height / 2;
+
+            Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(new Vector3(x, y, 0.0f));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.tag == "Pickup")
+                {
+                    isCarrying = true;
+                    carriedObj = hit.collider.gameObject;
+                    hit.collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                }
+            }
+        }
+    }
+
+    private void DropObject()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            isCarrying = false;
+            carriedObj.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            carriedObj = null;
+        }
+    }
+}
