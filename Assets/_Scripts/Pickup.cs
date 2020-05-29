@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pickup : MonoBehaviour
 {
+    //Variables
     private GameObject playerCamera;
     private GameObject carriedObj;
+
+    public Image reticle;
 
     private bool isCarrying;
 
@@ -16,6 +20,7 @@ public class Pickup : MonoBehaviour
     void Start()
     {
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
+        reticle = reticle.GetComponent<Image>();
         isCarrying = false;
     }
 
@@ -40,15 +45,21 @@ public class Pickup : MonoBehaviour
 
     private void PickupObject()
     {
-        if (Input.GetMouseButtonDown(0))
+        int x = Screen.width / 2;
+        int y = Screen.height / 2;
+
+        Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(new Vector3(x, y, 0.0f));
+        RaycastHit hit;
+
+        //Change reticle colour for detection
+        if (Physics.Raycast(ray, out hit))
         {
-            int x = Screen.width / 2;
-            int y = Screen.height / 2;
+            if (hit.collider.tag == "Pickup")
+                reticle.color = Color.green;
+            else
+                reticle.color = Color.white;
 
-            Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(new Vector3(x, y, 0.0f));
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            if (Input.GetMouseButtonDown(0))
             {
                 if (hit.collider.tag == "Pickup")
                 {
@@ -57,6 +68,7 @@ public class Pickup : MonoBehaviour
                     hit.collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 }
             }
+
         }
     }
 

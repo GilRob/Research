@@ -22,7 +22,7 @@ public class Goal : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         goalReached = true;
     }
