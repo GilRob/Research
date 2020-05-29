@@ -8,7 +8,6 @@ public class Pickup : MonoBehaviour
     //Variables
     private GameObject playerCamera;
     private GameObject carriedObj;
-
     public Image reticle;
 
     private bool isCarrying;
