@@ -1,18 +1,15 @@
 #include "FileManager.h"
 
 //This function will write the saved values to a text file
-void FileManager::WriteFile(Vec3 vec)
+void FileManager::WriteFile(int jumps)
 {
 	//Open the file
-	write.open("save.txt", std::ofstream::app);
+	write.open("save.txt");
 	//If the file is open
 	if (write.is_open())
 	{
 		//Write each value to the file
-		write << vec.x << "\n";
-		write << vec.y << "\n";
-		write << vec.z << "\n";
-		write << vec.id << "\n";
+		write << jumps << "\n";
 
 		//Close the file
 		write.close();
@@ -101,7 +98,7 @@ void FileManager::SavePosition(float posX, float posY, float posZ, float id)
 	tempVec.id = id;
 
 	//Call the file writer
-	WriteFile(tempVec);
+	//WriteFile(tempVec);
 }
 
 //Calls the reader
@@ -125,6 +122,13 @@ void FileManager::setY(float posY)
 void FileManager::setZ(float posZ)
 {
 	Z = posZ;
+}
+
+void FileManager::increaseJumps(int jumps)
+{
+	numJumps = jumps;
+
+	WriteFile(numJumps);
 }
 
 float FileManager::getX()

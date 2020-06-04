@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
+    public PluginTester tester;
+
     // Update is called once per frame
     void Update()
     {
@@ -43,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
+            tester.numJumps++;
         }
 
         velocity.y += gravity * Time.deltaTime;

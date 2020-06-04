@@ -20,7 +20,7 @@ class PLUGIN_API FileManager
 public:
 
 	//This function will write the saved values to a text file
-	void WriteFile(Vec3 vec);
+	void WriteFile(int jumps);
 	//This function will read the text file and assign the saved values to the players position
 	void ReadFile(std::string fileName);
 
@@ -35,6 +35,8 @@ public:
 	void setY(float posY);
 	void setZ(float posZ);
 
+	void increaseJumps(int jumps);
+
 	//Getters
 	float getX();
 	float getY();
@@ -44,6 +46,7 @@ public:
 	float X;
 	float Y;
 	float Z;
+	int numJumps = 0;
 
 	Vec3* myVecs;
 

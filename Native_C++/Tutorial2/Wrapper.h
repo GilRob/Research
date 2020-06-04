@@ -18,6 +18,8 @@ extern "C"
 	PLUGIN_API float getY();
 	PLUGIN_API float getZ();
 
+	PLUGIN_API void increaseJumps(int jumps);
+
 
 #ifdef __cplusplus
 }

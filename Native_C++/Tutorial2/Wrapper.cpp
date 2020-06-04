@@ -26,3 +26,8 @@ float getZ()
 {
 	return fileMan.getZ();
 }
+
+void increaseJumps(int jumps)
+{
+	return fileMan.increaseJumps(jumps);
+}
