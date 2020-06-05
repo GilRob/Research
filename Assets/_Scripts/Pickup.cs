@@ -15,9 +15,12 @@ public class Pickup : MonoBehaviour
     public float distance;
     public float smoother;
 
+    private Goal goal;
+
     // Start is called before the first frame update
     void Start()
     {
+        goal = GameObject.Find("Goal").GetComponent<Goal>();
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
         reticle = reticle.GetComponent<Image>();
         isCarrying = false;
@@ -65,6 +68,14 @@ public class Pickup : MonoBehaviour
                     isCarrying = true;
                     carriedObj = hit.collider.gameObject;
                     hit.collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+                    //Object sound stuff
+                    carriedObj.GetComponentInChildren<AudioSource>().Stop();
+                    //Goal sound stuff
+                    goal.source.Stop();
+                    goal.source.loop = true;
+                    goal.source.clip = goal.clipList[0];
+                    goal.source.Play();
                 }
             }
 
@@ -77,7 +88,11 @@ public class Pickup : MonoBehaviour
         {
             isCarrying = false;
             carriedObj.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            carriedObj.GetComponentInChildren<AudioSource>().Play();
             carriedObj = null;
+
+            //Goal sound stuff
+            goal.source.Stop();
         }
     }
 }

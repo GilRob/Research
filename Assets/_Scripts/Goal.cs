@@ -6,12 +6,16 @@ public class Goal : MonoBehaviour
 {
     //Variables
     private GameObject obj;
+    public AudioSource source;
 
-    private bool goalReached;
+    public AudioClip[] clipList;
+
+    public bool goalReached;
 
     // Start is called before the first frame update
     void Start()
     {
+        source = gameObject.GetComponent<AudioSource>();
         goalReached = false;
         obj = GameObject.FindGameObjectWithTag("Pickup");
     }
@@ -20,6 +24,13 @@ public class Goal : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        source.clip = clipList[1];
+        source.loop = false;
+        source.Play();
     }
 
     private void OnCollisionStay(Collision collision)
