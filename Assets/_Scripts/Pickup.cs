@@ -51,7 +51,7 @@ public class Pickup : MonoBehaviour
         RaycastHit hit;
 
         //Change reticle colour for detection
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 4))
         {
             if (hit.collider.tag == "Pickup")
                 reticle.color = Color.green;
