@@ -36,6 +36,8 @@ public class Goal : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         goalReached = true;
+
+        //Destroy(collision.gameObject, 2);
     }
 
     private void OnCollisionExit(Collision collision)
