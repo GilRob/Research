@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6500201741445834403}
   - component: {fileID: 8803898649434151497}
   - component: {fileID: 5806080645354051902}
-  - component: {fileID: 7276360183035886724}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Wall
@@ -109,13 +108,13 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 60
   DopplerLevel: 0
-  MinDistance: 1
+  MinDistance: 5.5725536
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -191,15 +190,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7276360183035886724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3626680345968799744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f60711048bfac1a4984093ebb83612fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

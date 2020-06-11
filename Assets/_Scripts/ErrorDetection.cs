@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ErrorDetection : MonoBehaviour
 {
+    private bool soundPlaying = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,26 @@ public class ErrorDetection : MonoBehaviour
         
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.tag == "Wall")
+        {
+
+            if (!soundPlaying)
+            {
+                hit.gameObject.GetComponent<AudioSource>().Play();
+                soundPlaying = true;
+            }
+
+            if (hit.gameObject.GetComponent<AudioSource>().isPlaying == false)
+                soundPlaying = false;
+        }
+        else if (hit.gameObject.tag != "Wall")
+        {
+            GameObject.FindGameObjectWithTag("Wall").GetComponent<AudioSource>().Stop();
+        }
+    }
+    /*private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
         {
@@ -29,5 +49,5 @@ public class ErrorDetection : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
             gameObject.GetComponent<AudioSource>().Stop();
-    }
+    }*/
 }
