@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
 
     public PluginTester tester;
+    private int jumpCounter = 0;
 
     // Update is called once per frame
     void Update()
@@ -45,7 +46,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
-            tester.numJumps++;
+            jumpCounter++;
+            tester.numJumps = jumpCounter.ToString();
+            //tester.numJumps++;
         }
 
         velocity.y += gravity * Time.deltaTime;

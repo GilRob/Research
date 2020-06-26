@@ -6,6 +6,7 @@ public class Goal : MonoBehaviour
 {
     //Variables
     private GameObject obj;
+    private GameObject door;
     public AudioSource source;
 
     public AudioClip[] clipList;
@@ -18,6 +19,7 @@ public class Goal : MonoBehaviour
         source = gameObject.GetComponent<AudioSource>();
         goalReached = false;
         obj = GameObject.FindGameObjectWithTag("Pickup");
+        door = GameObject.Find("Door");
     }
 
     // Update is called once per frame
@@ -36,8 +38,9 @@ public class Goal : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         goalReached = true;
-
-        //Destroy(collision.gameObject, 2);
+        //Play audio clip telling user to proceed to the door on their left
+        Destroy(door, 2f);
+        Destroy(collision.gameObject);
     }
 
     private void OnCollisionExit(Collision collision)
