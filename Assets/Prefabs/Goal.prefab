@@ -107,10 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9666d2d0d80e394395d64319a1f06cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
+  source: {fileID: 6902585705064234214}
+  player: {fileID: 1357959981915806802, guid: 85d0dd2119dd88a4fa20d8b3477f7d38, type: 3}
   clipList:
   - {fileID: 8300000, guid: 0746a3d8ecb08924e898ad1c490051f2, type: 3}
   - {fileID: 8300000, guid: 5dbf1293d08c0a04e9c84bbb1432d760, type: 3}
+  - {fileID: 8300000, guid: bfd5cf95b987d36409b6ec7707f66eb2, type: 3}
   goalReached: 0
 --- !u!82 &6902585705064234214
 AudioSource:
@@ -131,7 +133,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 100
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 18
   Pan2D: 0

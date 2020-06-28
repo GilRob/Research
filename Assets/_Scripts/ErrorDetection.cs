@@ -17,7 +17,7 @@ public class ErrorDetection : MonoBehaviour
         
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    /*private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.tag == "Wall")
         {
@@ -35,19 +35,38 @@ public class ErrorDetection : MonoBehaviour
         {
             GameObject.FindGameObjectWithTag("Wall").GetComponent<AudioSource>().Stop();
         }
-    }
-    /*private void OnCollisionStay(Collision collision)
+    }*/
+    private void OnTriggerStay(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        if (other.tag == "Wall")
         {
-            gameObject.GetComponent<AudioSource>().Play();
+            if (!soundPlaying)
+            {
+                other.gameObject.GetComponent<AudioSource>().Play();
+                soundPlaying = true;
+                //Debug.Log("COLLIDE");
+            }
+            if (other.gameObject.GetComponent<AudioSource>().isPlaying == false)
+                soundPlaying = false;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Wall")
+            other.gameObject.GetComponent<AudioSource>().Stop();
+    }
+    /*private void OnTriggerStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            collision.gameObject.GetComponent<AudioSource>().Play();
             Debug.Log("COLLIDE");
         }  
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
-            gameObject.GetComponent<AudioSource>().Stop();
+        if (collision.gameObject.tag == "Wall")
+            collision.gameObject.GetComponent<AudioSource>().Stop();
     }*/
 }

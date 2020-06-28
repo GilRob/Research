@@ -7,6 +7,7 @@ public class Pickup : MonoBehaviour
 {
     //Variables
     private GameObject playerCamera;
+    private GameObject player;
     private GameObject carriedObj;
     public Image reticle;
 
@@ -22,13 +23,20 @@ public class Pickup : MonoBehaviour
     {
         goal = GameObject.Find("Goal").GetComponent<Goal>();
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
+        player = GameObject.Find("Player");
         reticle = reticle.GetComponent<Image>();
         isCarrying = false;
+
+        gameObject.GetComponent<AudioSource>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!player.GetComponent<AudioSource>().isPlaying)
+        {
+            gameObject.GetComponent<AudioSource>().enabled = true;
+        }
         if (isCarrying)
         {
             CarryObject(carriedObj);

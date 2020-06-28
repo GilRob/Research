@@ -8,6 +8,7 @@ public class Goal : MonoBehaviour
     private GameObject obj;
     private GameObject door;
     public AudioSource source;
+    public GameObject player;
 
     public AudioClip[] clipList;
 
@@ -39,8 +40,11 @@ public class Goal : MonoBehaviour
     {
         goalReached = true;
         //Play audio clip telling user to proceed to the door on their left
+        player.GetComponent<AudioSource>().clip = clipList[2];
+        player.GetComponent<AudioSource>().Play();
         Destroy(door, 2f);
         Destroy(collision.gameObject);
+        //goalReached = false;
     }
 
     private void OnCollisionExit(Collision collision)
