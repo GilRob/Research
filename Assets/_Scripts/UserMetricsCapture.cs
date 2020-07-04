@@ -1,0 +1,123 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WebDownloadHelper
+{
+    // Source: http://stackoverflow.com/a/27284736/1607924
+    static string scriptTemplate = @"
+             var link = document.createElement(""a"");
+             link.download = '{0}';
+             link.href = 'data:application/octet-stream;charset=utf-8;base64,{1}';
+             document.body.appendChild(link);
+             link.click();
+             document.body.removeChild(link);
+             delete link;
+         ";
+
+    public static void InitiateDownload(string aName, byte[] aData)
+    {
+        string base64 = System.Convert.ToBase64String(aData);
+        string script = string.Format(scriptTemplate, aName, base64);
+        Application.ExternalEval(script);
+    }
+    public static void InitiateDownload(string aName, string aData)
+    {
+        byte[] data = System.Text.Encoding.UTF8.GetBytes(aData);
+        InitiateDownload(aName, data);
+    }
+}
+
+public class UserMetricsCapture : MonoBehaviour
+{
+    //Timer to keep track of how long it takes to complete
+    private float mainTimer = 0.0f;
+    //Timer to keep track of how long it takes to complete each task
+    public float taskTimer = 0.0f;
+    public float[] taskSplits;
+    //Timer to keep track of how long it takes to get to each guide sound when finding your seat
+    public float guideTimer = 0.0f;
+    public float[] guideSplits;
+
+    //Used to access data
+    public GuideSounds guide;
+
+    //String arrays to hold all the data
+    private string[] guideTimeStrings;
+    private string[] taskTimeStrings;
+
+    private bool downloadTime;
+    private bool notDownloaded;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        downloadTime = false;
+        notDownloaded = true;
+
+        guideTimeStrings = new string[7];
+        taskTimeStrings = new string[3];
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Total timer
+        if (!guide.completed)
+        {
+            mainTimer += Time.deltaTime;
+            taskTimer += Time.deltaTime;
+        }
+        else if (guide.completed && !downloadTime)
+        {
+            mainTimer.ToString();
+            Debug.Log(mainTimer);
+
+            //Go through the splits and convert them to strings
+            for (int i = 0; i < taskTimeStrings.Length; i++)
+            {
+                taskTimeStrings[i] = taskSplits[i].ToString();
+                Debug.Log(taskTimeStrings[i]);
+            }
+
+            downloadTime = true;
+        }
+
+        if (!guide.guidesCompleted && guide.guideSection)
+        {
+            guideTimer += Time.deltaTime;
+        }
+        else if (guide.guidesCompleted && guide.guideSection)
+        {
+            //Go through the splits and convert them to strings
+            for (int i = 0; i < guideTimeStrings.Length; i++)
+            {
+                guideTimeStrings[i] = guideSplits[i].ToString();
+                Debug.Log(guideTimeStrings[i]);
+            }
+            guide.guideSection = false;
+        }
+
+        if (downloadTime && notDownloaded)
+        {
+            WebDownloadHelper.InitiateDownload("User Metrics.csv",
+                "Completion Time:, " + mainTimer + "\n" +
+                "Time to each sound guide to find seat:\n" +
+                "Guide 1:, " + guideTimeStrings[0] + "\n" +
+                "Guide 2:, " + guideTimeStrings[1] + "\n" +
+                "Guide 3:, " + guideTimeStrings[2] + "\n" +
+                "Guide 4:, " + guideTimeStrings[3] + "\n" +
+                "Guide 5:, " + guideTimeStrings[4] + "\n" +
+                "Guide 6:, " + guideTimeStrings[5] + "\n" +
+                "Guide 7:, " + guideTimeStrings[6] + "\n" +
+                "Time to complete each task:" + "\n" +
+                "Registration:, " + taskTimeStrings[0] + "\n" +
+                "Seat:, " + taskTimeStrings[1] + "\n" +
+                "Podium:, " + taskTimeStrings[2]);
+
+            notDownloaded = false;
+        }
+
+    }
+}

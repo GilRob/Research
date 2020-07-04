@@ -6,7 +6,6 @@ public class Goal : MonoBehaviour
 {
     //Variables
     private GameObject obj;
-    private GameObject door;
     public AudioSource source;
     public GameObject player;
 
@@ -14,13 +13,15 @@ public class Goal : MonoBehaviour
 
     public bool goalReached;
 
+    public UserMetricsCapture userMetrics;
+
     // Start is called before the first frame update
     void Start()
     {
         source = gameObject.GetComponent<AudioSource>();
         goalReached = false;
         obj = GameObject.FindGameObjectWithTag("Pickup");
-        door = GameObject.Find("Door");
+        
     }
 
     // Update is called once per frame
@@ -42,8 +43,10 @@ public class Goal : MonoBehaviour
         //Play audio clip telling user to proceed to the door on their left
         player.GetComponent<AudioSource>().clip = clipList[2];
         player.GetComponent<AudioSource>().Play();
-        Destroy(door, 2f);
+        
         Destroy(collision.gameObject);
+        userMetrics.taskSplits[0] = userMetrics.taskTimer;
+        userMetrics.taskTimer = 0.0f;
         //goalReached = false;
     }
 

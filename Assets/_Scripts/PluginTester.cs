@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
 
-public class WebDownloadHelper
+/*public class WebDownloadHelper
 {
     // Source: http://stackoverflow.com/a/27284736/1607924
     static string scriptTemplate = @"
@@ -27,7 +27,7 @@ public class WebDownloadHelper
         byte[] data = System.Text.Encoding.UTF8.GetBytes(aData);
         InitiateDownload(aName, data);
     }
-}
+}*/
 
 public class PluginTester : MonoBehaviour
 {
