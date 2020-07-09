@@ -18,6 +18,8 @@ public class Pickup : MonoBehaviour
 
     private Goal goal;
 
+    public GameObject spotLight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,10 +43,14 @@ public class Pickup : MonoBehaviour
         {
             CarryObject(carriedObj);
             DropObject();
+            spotLight.transform.position = new Vector3(0.739f, 8.13f, -28.86f);
+            spotLight.GetComponent<Light>().spotAngle = 60;
         }
         else
         {
             PickupObject();
+            spotLight.transform.position = new Vector3(gameObject.transform.position.x, 8.13f, gameObject.transform.position.z);
+            spotLight.GetComponent<Light>().spotAngle = 30;
         }
     }
 

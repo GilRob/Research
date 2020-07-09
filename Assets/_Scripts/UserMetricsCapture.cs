@@ -49,6 +49,9 @@ public class UserMetricsCapture : MonoBehaviour
     private bool downloadTime;
     private bool notDownloaded;
 
+    //List to hold key presses and timestamps
+    private List<string> keyStamps = new List<string>();
+
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +66,16 @@ public class UserMetricsCapture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Keep track of key presses
+        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(vKey))
+            {
+                keyStamps.Add(vKey.ToString() + ", " + System.DateTime.Now.ToLongTimeString() + "\n");
+                Debug.Log(vKey);
+            }
+        }
+
         //Total timer
         if (!guide.completed)
         {
@@ -99,10 +112,10 @@ public class UserMetricsCapture : MonoBehaviour
             guide.guideSection = false;
         }
 
+        //Put together information for download
         if (downloadTime && notDownloaded)
         {
-            WebDownloadHelper.InitiateDownload("User Metrics.csv",
-                "Completion Time:, " + mainTimer + "\n" +
+            string downloadText = "Completion Time:, " + mainTimer + "\n" +
                 "Time to each sound guide to find seat:\n" +
                 "Guide 1:, " + guideTimeStrings[0] + "\n" +
                 "Guide 2:, " + guideTimeStrings[1] + "\n" +
@@ -114,7 +127,17 @@ public class UserMetricsCapture : MonoBehaviour
                 "Time to complete each task:" + "\n" +
                 "Registration:, " + taskTimeStrings[0] + "\n" +
                 "Seat:, " + taskTimeStrings[1] + "\n" +
-                "Podium:, " + taskTimeStrings[2]);
+                "Podium:, " + taskTimeStrings[2] + "\n" +
+                "Key Press:, Time Stamp:\n";
+
+            for (int i = 0; i < keyStamps.Count; i++)
+            {
+                downloadText += keyStamps[i];
+            }
+
+            Debug.Log(downloadText);
+
+            WebDownloadHelper.InitiateDownload("User Metrics.csv", downloadText);              
 
             notDownloaded = false;
         }

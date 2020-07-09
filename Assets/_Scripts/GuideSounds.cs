@@ -22,6 +22,8 @@ public class GuideSounds : MonoBehaviour
     //Used to keep track of where they are at in the guides
     private int checkpoint = 1;
 
+    public GameObject spotLight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +51,9 @@ public class GuideSounds : MonoBehaviour
                 guide.GetComponent<AudioSource>().enabled = true;
                 Destroy(door);
                 guideSection = true;
-                //userMetrics.guideTimer = 0.0f;
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
             }
 
         }
@@ -61,6 +65,9 @@ public class GuideSounds : MonoBehaviour
             guide.GetComponent<AudioSource>().loop = true;
             guide.GetComponent<AudioSource>().Play();
             Debug.Log("Podium Time");
+
+            //Spotlight movement
+            spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
             checkpoint++;
         }
     }
@@ -76,8 +83,12 @@ public class GuideSounds : MonoBehaviour
                 //Add to guide array
                 userMetrics.guideSplits[0] = userMetrics.guideTimer;
                 userMetrics.guideTimer = 0.0f;
+
                 //Change collider position
                 other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -18f);
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
                 checkpoint++;
             }
             else if (checkpoint == 2)
@@ -88,6 +99,9 @@ public class GuideSounds : MonoBehaviour
 
                 //Change collider position
                 other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -11f);
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
                 checkpoint++;
             }
             else if (checkpoint == 3)
@@ -98,6 +112,9 @@ public class GuideSounds : MonoBehaviour
 
                 //Change collider position
                 other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, 0f);
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
                 checkpoint++;
             }
             else if (checkpoint == 4)
@@ -108,6 +125,9 @@ public class GuideSounds : MonoBehaviour
 
                 //Change collider position
                 other.gameObject.transform.position = new Vector3(-1.5f, 3.58f, 0f);
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
                 checkpoint++;
             }
             else if (checkpoint == 5)
@@ -118,6 +138,9 @@ public class GuideSounds : MonoBehaviour
 
                 //Change collider position
                 other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 0f);
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
                 checkpoint++;
             }
             else if (checkpoint == 6)
@@ -128,6 +151,9 @@ public class GuideSounds : MonoBehaviour
 
                 //Change collider position
                 other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 8.97f);
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
                 checkpoint++;
             }
             else if (checkpoint == 7)
@@ -151,12 +177,16 @@ public class GuideSounds : MonoBehaviour
 
                 //Change collider position
                 other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 0f);
+
                 checkpoint++;
             }
             else if (checkpoint == 9)
             {
                 //Change collider position
                 other.gameObject.transform.position = new Vector3(10f, 3.58f, 0f);
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
                 checkpoint++;
             }
             /*else if (checkpoint == 9)

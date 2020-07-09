@@ -330,9 +330,9 @@ PlayerSettings:
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
   m_TemplateCustomTags:
-    DESCRIPTION: 
+    DESCRIPTION: WASD to move and Left Mouse Button to interact.
     META_TAGS: 
-    NAME: 
+    NAME: Conference Use-Case
   mobileMTRendering:
     Android: 1
     iPhone: 1

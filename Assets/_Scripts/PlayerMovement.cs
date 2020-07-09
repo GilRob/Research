@@ -24,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*if (Input.anyKeyDown)
+        {
+            
+        }*/
+
         //Creates an invisible sphere based on groundcheck
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
