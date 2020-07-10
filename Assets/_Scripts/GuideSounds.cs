@@ -24,6 +24,8 @@ public class GuideSounds : MonoBehaviour
 
     public GameObject spotLight;
 
+    private int randomNum = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,38 +39,77 @@ public class GuideSounds : MonoBehaviour
         completed = false;
         guidesCompleted = false;
         guideSection = false;
+
+        randomNum = Random.Range(1, 4);
+        Debug.Log(randomNum);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (goal.goalReached)
+        //Path to chair if randomNum is 1 or 2
+        if (randomNum != 3)
         {
-            //Janky things to make audio clip play without dings
-            if (checkpoint == 1 && !gameObject.GetComponent<AudioSource>().isPlaying)
+            if (goal.goalReached)
             {
-                guide.GetComponent<BoxCollider>().enabled = true;
-                guide.GetComponent<AudioSource>().enabled = true;
-                Destroy(door);
-                guideSection = true;
+                //Janky things to make audio clip play without dings
+                if (checkpoint == 1 && !gameObject.GetComponent<AudioSource>().isPlaying)
+                {
+                    guide.GetComponent<BoxCollider>().enabled = true;
+                    guide.GetComponent<AudioSource>().enabled = true;
+                    Destroy(door);
+                    guideSection = true;
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
+                }
+
+            }
+
+            //Janky things to make audio clip play without dings
+            if (checkpoint == 8 && !gameObject.GetComponent<AudioSource>().isPlaying)
+            {
+                guide.GetComponent<AudioSource>().clip = clipList[0];
+                guide.GetComponent<AudioSource>().loop = true;
+                guide.GetComponent<AudioSource>().Play();
+                Debug.Log("Podium Time");
 
                 //Spotlight movement
                 spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
+                checkpoint++;
+            }
+        }
+        //Path to chair if randomNum is 3
+        else
+        {
+            if (goal.goalReached)
+            {
+                //Janky things to make audio clip play without dings
+                if (checkpoint == 1 && !gameObject.GetComponent<AudioSource>().isPlaying)
+                {
+                    guide.GetComponent<BoxCollider>().enabled = true;
+                    guide.GetComponent<AudioSource>().enabled = true;
+                    Destroy(door);
+                    guideSection = true;
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
+                }
+
             }
 
-        }
+            //Janky things to make audio clip play without dings
+            if (checkpoint == 11 && !gameObject.GetComponent<AudioSource>().isPlaying)
+            {
+                guide.GetComponent<AudioSource>().clip = clipList[0];
+                guide.GetComponent<AudioSource>().loop = true;
+                guide.GetComponent<AudioSource>().Play();
+                Debug.Log("Podium Time");
 
-        //Janky things to make audio clip play without dings
-        if (checkpoint == 8 && !gameObject.GetComponent<AudioSource>().isPlaying)
-        {
-            guide.GetComponent<AudioSource>().clip = clipList[0];
-            guide.GetComponent<AudioSource>().loop = true;
-            guide.GetComponent<AudioSource>().Play();
-            Debug.Log("Podium Time");
-
-            //Spotlight movement
-            spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
-            checkpoint++;
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
+                checkpoint++;
+            }
         }
     }
 
@@ -78,135 +119,445 @@ public class GuideSounds : MonoBehaviour
         {
             Debug.Log("Triggered");
 
-            if (checkpoint == 1)
+            //Path to chair if randomNum is 1
+            if (randomNum == 1)
             {
-                //Add to guide array
-                userMetrics.guideSplits[0] = userMetrics.guideTimer;
-                userMetrics.guideTimer = 0.0f;
+                if (checkpoint == 1)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Change collider position
-                other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -18f);
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -15.5f);
 
-                //Spotlight movement
-                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
-                checkpoint++;
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 2)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -6f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 3)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, 0f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 4)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(-1.5f, 3.58f, 0f);
+                    other.gameObject.GetComponent<BoxCollider>().size = new Vector3(3f, 8f, 3f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 5)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 0f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 6)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 8.97f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 7)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    guidesCompleted = true;
+                    //userMetrics.guideTimer = 0.0f;
+
+                    //Add to task array
+                    userMetrics.taskSplits[1] = userMetrics.taskTimer;
+                    userMetrics.taskTimer = 0.0f;
+
+                    other.gameObject.GetComponent<AudioSource>().clip = clipList[1];
+                    other.gameObject.GetComponent<AudioSource>().loop = false;
+                    other.gameObject.GetComponent<AudioSource>().Play();
+
+                    //Play the find podium voice clip
+                    gameObject.GetComponent<AudioSource>().clip = clipList[2];
+                    gameObject.GetComponent<AudioSource>().Play();
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 0f);
+
+                    checkpoint++;
+                }
+                else if (checkpoint == 9)
+                {
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(10f, 3.58f, 0f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                /*else if (checkpoint == 9)
+                {
+                    checkpoint++;
+                }*/
+                else if (checkpoint == 10)
+                {
+                    //Add to task array
+                    userMetrics.taskSplits[2] = userMetrics.taskTimer;
+
+                    completed = true;
+
+                    other.gameObject.GetComponent<AudioSource>().clip = clipList[1];
+                    other.gameObject.GetComponent<AudioSource>().loop = false;
+                    other.gameObject.GetComponent<AudioSource>().Play();
+
+                    //Play the ending voice clip
+                    gameObject.GetComponent<AudioSource>().clip = clipList[3];
+                    gameObject.GetComponent<AudioSource>().Play();
+                }
             }
-            else if (checkpoint == 2)
+            //Path to chair if randomNum is 2
+            else if (randomNum == 2)
             {
-                //Add to guide array
-                userMetrics.guideSplits[1] = userMetrics.guideTimer;
-                userMetrics.guideTimer = 0.0f;
+                if (checkpoint == 1)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Change collider position
-                other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -11f);
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -15.5f);
 
-                //Spotlight movement
-                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
-                checkpoint++;
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 2)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -6f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 3)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, 0f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 4)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(-4f, 3.58f, 0f);
+                    other.gameObject.GetComponent<BoxCollider>().size = new Vector3(3f, 8f, 3f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 5)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(1.63f, 3.58f, 0f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 6)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(1.63f, 3.58f, -5.45f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 7)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    guidesCompleted = true;
+                    //userMetrics.guideTimer = 0.0f;
+
+                    //Add to task array
+                    userMetrics.taskSplits[1] = userMetrics.taskTimer;
+                    userMetrics.taskTimer = 0.0f;
+
+                    other.gameObject.GetComponent<AudioSource>().clip = clipList[1];
+                    other.gameObject.GetComponent<AudioSource>().loop = false;
+                    other.gameObject.GetComponent<AudioSource>().Play();
+
+                    //Play the find podium voice clip
+                    gameObject.GetComponent<AudioSource>().clip = clipList[2];
+                    gameObject.GetComponent<AudioSource>().Play();
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(1.63f, 3.58f, 0f);
+
+                    checkpoint++;
+                }
+                else if (checkpoint == 9)
+                {
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(10f, 3.58f, 0f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                /*else if (checkpoint == 9)
+                {
+                    checkpoint++;
+                }*/
+                else if (checkpoint == 10)
+                {
+                    //Add to task array
+                    userMetrics.taskSplits[2] = userMetrics.taskTimer;
+
+                    completed = true;
+
+                    other.gameObject.GetComponent<AudioSource>().clip = clipList[1];
+                    other.gameObject.GetComponent<AudioSource>().loop = false;
+                    other.gameObject.GetComponent<AudioSource>().Play();
+
+                    //Play the ending voice clip
+                    gameObject.GetComponent<AudioSource>().clip = clipList[3];
+                    gameObject.GetComponent<AudioSource>().Play();
+                }
             }
-            else if (checkpoint == 3)
+            //Path to chair if randomNum is 3
+            else if (randomNum == 3)
             {
-                //Add to guide array
-                userMetrics.guideSplits[2] = userMetrics.guideTimer;
-                userMetrics.guideTimer = 0.0f;
+                if (checkpoint == 1)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Change collider position
-                other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, 0f);
+                    //Change collider position to guide 2
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -15.5f);
 
-                //Spotlight movement
-                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
-                checkpoint++;
-            }
-            else if (checkpoint == 4)
-            {
-                //Add to guide array
-                userMetrics.guideSplits[3] = userMetrics.guideTimer;
-                userMetrics.guideTimer = 0.0f;
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 2)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Change collider position
-                other.gameObject.transform.position = new Vector3(-1.5f, 3.58f, 0f);
+                    //Change collider position to guide 3
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, -6f);
 
-                //Spotlight movement
-                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
-                checkpoint++;
-            }
-            else if (checkpoint == 5)
-            {
-                //Add to guide array
-                userMetrics.guideSplits[4] = userMetrics.guideTimer;
-                userMetrics.guideTimer = 0.0f;
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 3)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Change collider position
-                other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 0f);
+                    //Change collider position to guide 4
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, 0f);
 
-                //Spotlight movement
-                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
-                checkpoint++;
-            }
-            else if (checkpoint == 6)
-            {
-                //Add to guide array
-                userMetrics.guideSplits[5] = userMetrics.guideTimer;
-                userMetrics.guideTimer = 0.0f;
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 4)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Change collider position
-                other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 8.97f);
+                    //Change collider position to guide 5
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, 8f);
+                    other.gameObject.GetComponent<BoxCollider>().size = new Vector3(3f, 8f, 3f);
 
-                //Spotlight movement
-                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
-                checkpoint++;
-            }
-            else if (checkpoint == 7)
-            {
-                //Add to guide array
-                userMetrics.guideSplits[6] = userMetrics.guideTimer;
-                guidesCompleted = true;
-                //userMetrics.guideTimer = 0.0f;
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 5)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Add to task array
-                userMetrics.taskSplits[1] = userMetrics.taskTimer;
-                userMetrics.taskTimer = 0.0f;
+                    //Change collider position to guide 6
+                    other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, 15.3f);
 
-                other.gameObject.GetComponent<AudioSource>().clip = clipList[1];
-                other.gameObject.GetComponent<AudioSource>().loop = false;
-                other.gameObject.GetComponent<AudioSource>().Play();
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 6)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Play the find podium voice clip
-                gameObject.GetComponent<AudioSource>().clip = clipList[2];
-                gameObject.GetComponent<AudioSource>().Play();
+                    //Change collider position to guide 7
+                    other.gameObject.transform.position = new Vector3(0f, 3.58f, 15.3f);
 
-                //Change collider position
-                other.gameObject.transform.position = new Vector3(5.97f, 3.58f, 0f);
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 7)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                checkpoint++;
-            }
-            else if (checkpoint == 9)
-            {
-                //Change collider position
-                other.gameObject.transform.position = new Vector3(10f, 3.58f, 0f);
+                    //Change collider position to guide 8
+                    other.gameObject.transform.position = new Vector3(5.9f, 3.58f, 15.3f);
 
-                //Spotlight movement
-                spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
-                checkpoint++;
-            }
-            /*else if (checkpoint == 9)
-            {
-                checkpoint++;
-            }*/
-            else if (checkpoint == 10)
-            {
-                //Add to task array
-                userMetrics.taskSplits[2] = userMetrics.taskTimer;
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 8)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                completed = true;
+                    //Change collider position to guide 8
+                    other.gameObject.transform.position = new Vector3(9.4f, 3.58f, 15.3f);
 
-                other.gameObject.GetComponent<AudioSource>().clip = clipList[1];
-                other.gameObject.GetComponent<AudioSource>().loop = false;
-                other.gameObject.GetComponent<AudioSource>().Play();
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 9)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    userMetrics.guideTimer = 0.0f;
 
-                //Play the ending voice clip
-                gameObject.GetComponent<AudioSource>().clip = clipList[3];
-                gameObject.GetComponent<AudioSource>().Play();
+                    //Change collider position to guide 8
+                    other.gameObject.transform.position = new Vector3(9.4f, 3.58f, 9f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 10)
+                {
+                    //Add to guide List
+                    userMetrics.guideSplits.Add(userMetrics.guideTimer);
+                    guidesCompleted = true;
+                    //userMetrics.guideTimer = 0.0f;
+
+                    //Add to task array
+                    userMetrics.taskSplits[1] = userMetrics.taskTimer;
+                    userMetrics.taskTimer = 0.0f;
+
+                    other.gameObject.GetComponent<AudioSource>().clip = clipList[1];
+                    other.gameObject.GetComponent<AudioSource>().loop = false;
+                    other.gameObject.GetComponent<AudioSource>().Play();
+
+                    //Play the find podium voice clip
+                    gameObject.GetComponent<AudioSource>().clip = clipList[2];
+                    gameObject.GetComponent<AudioSource>().Play();
+
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(9.4f, 3.58f, 4.4f);
+
+                    checkpoint++;
+                }
+                else if (checkpoint == 12)
+                {
+                    //Change collider position
+                    other.gameObject.transform.position = new Vector3(10f, 3.58f, 0f);
+
+                    //Spotlight movement
+                    spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
+                    checkpoint++;
+                }
+                else if (checkpoint == 13)
+                {
+                    //Add to task array
+                    userMetrics.taskSplits[2] = userMetrics.taskTimer;
+
+                    completed = true;
+
+                    other.gameObject.GetComponent<AudioSource>().clip = clipList[1];
+                    other.gameObject.GetComponent<AudioSource>().loop = false;
+                    other.gameObject.GetComponent<AudioSource>().Play();
+
+                    //Play the ending voice clip
+                    gameObject.GetComponent<AudioSource>().clip = clipList[3];
+                    gameObject.GetComponent<AudioSource>().Play();
+                }
             }
         }
     }

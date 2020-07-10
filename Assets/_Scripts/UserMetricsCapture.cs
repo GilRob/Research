@@ -37,13 +37,14 @@ public class UserMetricsCapture : MonoBehaviour
     public float[] taskSplits;
     //Timer to keep track of how long it takes to get to each guide sound when finding your seat
     public float guideTimer = 0.0f;
-    public float[] guideSplits;
+    //public float[] guideSplits;
+    public List<float> guideSplits = new List<float>();
 
     //Used to access data
     public GuideSounds guide;
 
     //String arrays to hold all the data
-    private string[] guideTimeStrings;
+    private List<string> guideTimeStrings = new List<string>();
     private string[] taskTimeStrings;
 
     private bool downloadTime;
@@ -59,7 +60,6 @@ public class UserMetricsCapture : MonoBehaviour
         downloadTime = false;
         notDownloaded = true;
 
-        guideTimeStrings = new string[7];
         taskTimeStrings = new string[3];
     }
 
@@ -104,9 +104,9 @@ public class UserMetricsCapture : MonoBehaviour
         else if (guide.guidesCompleted && guide.guideSection)
         {
             //Go through the splits and convert them to strings
-            for (int i = 0; i < guideTimeStrings.Length; i++)
+            for (int i = 0; i < guideSplits.Count; i++)
             {
-                guideTimeStrings[i] = guideSplits[i].ToString();
+                guideTimeStrings.Add("Guide " + (i + 1) + ":, " + guideSplits[i].ToString() + "\n");
                 Debug.Log(guideTimeStrings[i]);
             }
             guide.guideSection = false;
@@ -115,15 +115,16 @@ public class UserMetricsCapture : MonoBehaviour
         //Put together information for download
         if (downloadTime && notDownloaded)
         {
-            string downloadText = "Completion Time:, " + mainTimer + "\n" +
-                "Time to each sound guide to find seat:\n" +
-                "Guide 1:, " + guideTimeStrings[0] + "\n" +
-                "Guide 2:, " + guideTimeStrings[1] + "\n" +
-                "Guide 3:, " + guideTimeStrings[2] + "\n" +
-                "Guide 4:, " + guideTimeStrings[3] + "\n" +
-                "Guide 5:, " + guideTimeStrings[4] + "\n" +
-                "Guide 6:, " + guideTimeStrings[5] + "\n" +
-                "Guide 7:, " + guideTimeStrings[6] + "\n" +
+            string downloadText = 
+                "Completion Time:, " + mainTimer + "\n" +
+                "Time to each sound guide to find seat:\n";
+
+            for (int i = 0; i < guideTimeStrings.Count; i++)
+            {
+                downloadText += guideTimeStrings[i];
+            }
+
+            downloadText +=
                 "Time to complete each task:" + "\n" +
                 "Registration:, " + taskTimeStrings[0] + "\n" +
                 "Seat:, " + taskTimeStrings[1] + "\n" +
