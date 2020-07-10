@@ -53,6 +53,14 @@ public class UserMetricsCapture : MonoBehaviour
     //List to hold key presses and timestamps
     private List<string> keyStamps = new List<string>();
 
+    //Inaccurasy tracking
+    public int numWallCollisions = 0;
+    public List<string> inaccuracies = new List<string>();
+
+    //Start time and end time keepers
+    private string startTime;
+    private string endTime;
+
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +69,8 @@ public class UserMetricsCapture : MonoBehaviour
         notDownloaded = true;
 
         taskTimeStrings = new string[3];
+
+        startTime = System.DateTime.Now.ToLongTimeString();
     }
 
     // Update is called once per frame
@@ -115,8 +125,12 @@ public class UserMetricsCapture : MonoBehaviour
         //Put together information for download
         if (downloadTime && notDownloaded)
         {
+            endTime = System.DateTime.Now.ToLongTimeString();
+
             string downloadText = 
-                "Completion Time:, " + mainTimer + "\n" +
+                "Start Time:, " + startTime + "\n" +
+                "End Time:, " + endTime + "\n" +
+                "Completion Time (Path " + guide.randomNum.ToString() + "):, " + mainTimer + "\n" +
                 "Time to each sound guide to find seat:\n";
 
             for (int i = 0; i < guideTimeStrings.Count; i++)
@@ -134,6 +148,15 @@ public class UserMetricsCapture : MonoBehaviour
             for (int i = 0; i < keyStamps.Count; i++)
             {
                 downloadText += keyStamps[i];
+            }
+
+            downloadText +=
+                "Wall Collisions:, " + numWallCollisions.ToString() + "\n" +
+                "Inaccuracies:\n";
+
+            for (int i = 0; i < inaccuracies.Count; i++)
+            {
+                downloadText += inaccuracies[i];
             }
 
             Debug.Log(downloadText);

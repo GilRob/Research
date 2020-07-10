@@ -24,7 +24,7 @@ public class GuideSounds : MonoBehaviour
 
     public GameObject spotLight;
 
-    private int randomNum = 0;
+    public int randomNum = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -42,30 +42,47 @@ public class GuideSounds : MonoBehaviour
 
         randomNum = Random.Range(1, 4);
         Debug.Log(randomNum);
+
+        if (randomNum == 1)
+        {
+            GameObject.Find("Accuracy Triggers Path 2").SetActive(false);
+            GameObject.Find("Accuracy Triggers Path 3").SetActive(false);
+        }
+        else if (randomNum == 1)
+        {
+            GameObject.Find("Accuracy Triggers Path 1").SetActive(false);
+            GameObject.Find("Accuracy Triggers Path 3").SetActive(false);
+        }
+        else
+        {
+            GameObject.Find("Accuracy Triggers Path 1").SetActive(false);
+            GameObject.Find("Accuracy Triggers Path 2").SetActive(false);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (goal.goalReached)
+        {
+            //Janky things to make audio clip play without dings
+            if (checkpoint == 1 && !gameObject.GetComponent<AudioSource>().isPlaying)
+            {
+                guide.GetComponent<BoxCollider>().enabled = true;
+                guide.GetComponent<AudioSource>().enabled = true;
+                Destroy(door);
+                guideSection = true;
+
+                //Spotlight movement
+                spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
+            }
+
+        }
+
         //Path to chair if randomNum is 1 or 2
         if (randomNum != 3)
         {
-            if (goal.goalReached)
-            {
-                //Janky things to make audio clip play without dings
-                if (checkpoint == 1 && !gameObject.GetComponent<AudioSource>().isPlaying)
-                {
-                    guide.GetComponent<BoxCollider>().enabled = true;
-                    guide.GetComponent<AudioSource>().enabled = true;
-                    Destroy(door);
-                    guideSection = true;
-
-                    //Spotlight movement
-                    spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
-                }
-
-            }
-
             //Janky things to make audio clip play without dings
             if (checkpoint == 8 && !gameObject.GetComponent<AudioSource>().isPlaying)
             {
@@ -82,22 +99,6 @@ public class GuideSounds : MonoBehaviour
         //Path to chair if randomNum is 3
         else
         {
-            if (goal.goalReached)
-            {
-                //Janky things to make audio clip play without dings
-                if (checkpoint == 1 && !gameObject.GetComponent<AudioSource>().isPlaying)
-                {
-                    guide.GetComponent<BoxCollider>().enabled = true;
-                    guide.GetComponent<AudioSource>().enabled = true;
-                    Destroy(door);
-                    guideSection = true;
-
-                    //Spotlight movement
-                    spotLight.transform.position = new Vector3(guide.transform.position.x, 8.13f, guide.transform.position.z);
-                }
-
-            }
-
             //Janky things to make audio clip play without dings
             if (checkpoint == 11 && !gameObject.GetComponent<AudioSource>().isPlaying)
             {
@@ -439,7 +440,6 @@ public class GuideSounds : MonoBehaviour
 
                     //Change collider position to guide 5
                     other.gameObject.transform.position = new Vector3(-8.5f, 3.58f, 8f);
-                    other.gameObject.GetComponent<BoxCollider>().size = new Vector3(3f, 8f, 3f);
 
                     //Spotlight movement
                     spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);
@@ -466,6 +466,7 @@ public class GuideSounds : MonoBehaviour
 
                     //Change collider position to guide 7
                     other.gameObject.transform.position = new Vector3(0f, 3.58f, 15.3f);
+                    other.gameObject.GetComponent<BoxCollider>().size = new Vector3(3f, 8f, 3f);
 
                     //Spotlight movement
                     spotLight.transform.position = new Vector3(other.transform.position.x, 8.13f, other.transform.position.z);

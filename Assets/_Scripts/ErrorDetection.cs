@@ -5,6 +5,10 @@ using UnityEngine;
 public class ErrorDetection : MonoBehaviour
 {
     private bool soundPlaying = false;
+
+    public UserMetricsCapture userMetrics;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,25 +21,6 @@ public class ErrorDetection : MonoBehaviour
         
     }
 
-    /*private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.tag == "Wall")
-        {
-
-            if (!soundPlaying)
-            {
-                hit.gameObject.GetComponent<AudioSource>().Play();
-                soundPlaying = true;
-            }
-
-            if (hit.gameObject.GetComponent<AudioSource>().isPlaying == false)
-                soundPlaying = false;
-        }
-        else if (hit.gameObject.tag != "Wall")
-        {
-            GameObject.FindGameObjectWithTag("Wall").GetComponent<AudioSource>().Stop();
-        }
-    }*/
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Wall")
@@ -50,23 +35,21 @@ public class ErrorDetection : MonoBehaviour
                 soundPlaying = false;
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Accuracy")
+        {
+            userMetrics.inaccuracies.Add(other.gameObject.name + ":, " + System.DateTime.Now.ToLongTimeString() + "\n");
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Wall")
-            other.gameObject.GetComponent<AudioSource>().Stop();
-    }
-    /*private void OnTriggerStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
         {
-            collision.gameObject.GetComponent<AudioSource>().Play();
-            Debug.Log("COLLIDE");
-        }  
+            other.gameObject.GetComponent<AudioSource>().Stop();
+            userMetrics.numWallCollisions++;
+        }
     }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-            collision.gameObject.GetComponent<AudioSource>().Stop();
-    }*/
 }
