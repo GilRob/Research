@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,14 +22,37 @@ public class PlayerMovement : MonoBehaviour
     public PluginTester tester;
     private int jumpCounter = 0;
 
+    private bool vrEnabled;
+
+
+    private void Start()
+    {
+        if (XRDevice.isPresent)
+        {
+            vrEnabled = true;
+            GameObject.Find("handL").SetActive(true);
+            GameObject.Find("handR").SetActive(true);
+            GameObject.Find("Cameras").SetActive(true);
+            GameObject.Find("Camera").SetActive(false);
+            /*GameObject.Find("Player").SetActive(false);
+            GameObject.Find("WebXRCameraSet").SetActive(true);*/
+        }
+        else
+        {
+            vrEnabled = false;
+            GameObject.Find("handL").SetActive(false);
+            GameObject.Find("handR").SetActive(false);
+            GameObject.Find("Cameras").SetActive(false);
+            GameObject.Find("Camera").SetActive(true);
+            /*GameObject.Find("Player").SetActive(true);
+            GameObject.Find("WebXRCameraSet").SetActive(false);*/
+        }
+
+        Debug.Log(vrEnabled);
+    }
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.anyKeyDown)
-        {
-            
-        }*/
-
         //Creates an invisible sphere based on groundcheck
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 

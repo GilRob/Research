@@ -64,6 +64,8 @@ namespace WebXR
             }
         }
 
+        public Transform playerBody;
+
         private void onHeadsetUpdate(
             Matrix4x4 leftProjectionMatrix,
             Matrix4x4 rightProjectionMatrix,
@@ -77,6 +79,9 @@ namespace WebXR
                 cameraL.projectionMatrix = leftProjectionMatrix;
                 WebXRMatrixUtil.SetTransformFromViewMatrix(cameraR.transform, rightViewMatrix * sitStandMatrix.inverse);
                 cameraR.projectionMatrix = rightProjectionMatrix;
+
+                //playerBody.Rotate(Vector3.up * cameraMain.transform.forward.x);
+                playerBody.position += cameraMain.transform.forward * Time.deltaTime;
             }
         }
     }
