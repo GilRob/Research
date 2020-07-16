@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool vrEnabled;
 
+    bool isRotating = false;
+
     //VR Camera
     public Transform vrCameraTransform;
 
@@ -83,6 +85,22 @@ public class PlayerMovement : MonoBehaviour
             //Movement has to be local
             move = vrCameraTransform.right * x + vrCameraTransform.forward * z;
         }
+
+        float rotation = Input.GetAxis("HorizontalRight");
+        
+        if (rotation > 0 && !isRotating)
+        {
+            transform.Rotate(0f, 45f, 0f);
+            isRotating = true;
+        }
+        if (rotation == 0)
+            isRotating = false;
+        if (rotation < 0 && !isRotating)
+        {
+            transform.Rotate(0f, -45f, 0f);
+            isRotating = true;
+        }
+
 
         controller.Move(move * speed * Time.deltaTime);
 
