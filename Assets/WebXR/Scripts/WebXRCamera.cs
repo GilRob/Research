@@ -81,7 +81,8 @@ namespace WebXR
                 cameraR.projectionMatrix = rightProjectionMatrix;
 
                 //playerBody.Rotate(Vector3.up * cameraMain.transform.forward.x);
-                playerBody.position += cameraMain.transform.forward * Time.deltaTime;
+                //playerBody.position += cameraMain.transform.forward * Time.deltaTime;
+                //playerBody.Rotate(Vector3.up * cameraMain.transform.right.y);
             }
         }
     }

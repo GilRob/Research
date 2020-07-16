@@ -22,8 +22,12 @@ public class PlayerMovement : MonoBehaviour
     public PluginTester tester;
     private int jumpCounter = 0;
 
-    private bool vrEnabled;
+    private Vector3 move;
 
+    public bool vrEnabled;
+
+    //VR Camera
+    public Transform vrCameraTransform;
 
     private void Start()
     {
@@ -66,8 +70,19 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
+
         //Movement has to be local
-        Vector3 move = transform.right * x + transform.forward * z;
+        if (!vrEnabled)
+        {
+            move = transform.right * x + transform.forward * z;
+        }
+
+        //For VR movement
+        if (vrEnabled)
+        {
+            //Movement has to be local
+            move = vrCameraTransform.right * x + vrCameraTransform.forward * z;
+        }
 
         controller.Move(move * speed * Time.deltaTime);
 

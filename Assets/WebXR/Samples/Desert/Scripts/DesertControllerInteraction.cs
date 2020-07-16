@@ -17,8 +17,14 @@ public class DesertControllerInteraction : MonoBehaviour
 
     private Animator anim;
 
+    //My additions
+    private Goal goal;
+    public GameObject spotLight;
+
     void Awake()
     {
+        goal = GameObject.Find("Goal").GetComponent<Goal>();
+
         t = transform;
         attachJoint = GetComponent<FixedJoint> ();
         anim = GetComponent<Animator>();
@@ -49,7 +55,8 @@ public class DesertControllerInteraction : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Interactable"))
+        //Used to be the "Interactable" tag
+        if (!other.gameObject.CompareTag("Pickup"))
             return;
 
         contactRigidBodies.Add(other.attachedRigidbody);
@@ -57,7 +64,8 @@ public class DesertControllerInteraction : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (!other.gameObject.CompareTag("Interactable"))
+        //Used to be the "Interactable" tag
+        if (!other.gameObject.CompareTag("Pickup"))
             return;
 
         contactRigidBodies.Remove(other.attachedRigidbody);
@@ -69,6 +77,24 @@ public class DesertControllerInteraction : MonoBehaviour
         if (!currentRigidBody)
             return;
 
+        //My additions
+        spotLight.transform.position = new Vector3(0.739f, 8.13f, -28.86f);
+        spotLight.GetComponent<Light>().spotAngle = 60;
+
+        //currentRigidBody.GetComponent<Rigidbody>().isKinematic = true;
+        //
+
+        //Goal sound stuff
+        goal.source.Stop();
+        goal.source.loop = true;
+        goal.source.clip = goal.clipList[0];
+        goal.source.Play();
+        //
+
+        //Object sound stuff - my addition
+        currentRigidBody.GetComponentInChildren<AudioSource>().Stop();
+        //
+
         currentRigidBody.MovePosition(t.position);
         attachJoint.connectedBody = currentRigidBody;
         
@@ -77,8 +103,21 @@ public class DesertControllerInteraction : MonoBehaviour
     }
 
     public void Drop() {
+
         if (!currentRigidBody)
             return;
+
+        //My additions
+        spotLight.transform.position = new Vector3(currentRigidBody.transform.position.x, 8.13f, currentRigidBody.transform.position.z);
+        spotLight.GetComponent<Light>().spotAngle = 30;
+
+        //currentRigidBody.GetComponent<Rigidbody>().isKinematic = false;
+
+        //Goal sound stuff
+        goal.source.Stop();
+
+        currentRigidBody.GetComponentInChildren<AudioSource>().Play();
+        //
 
         attachJoint.connectedBody = null;
         

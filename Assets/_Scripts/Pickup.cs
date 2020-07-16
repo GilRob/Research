@@ -20,6 +20,8 @@ public class Pickup : MonoBehaviour
 
     public GameObject spotLight;
 
+    public PlayerMovement playerMovement;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,18 +41,21 @@ public class Pickup : MonoBehaviour
         {
             gameObject.GetComponent<AudioSource>().enabled = true;
         }
-        if (isCarrying)
+        if (!playerMovement.vrEnabled)
         {
-            CarryObject(carriedObj);
-            DropObject();
-            spotLight.transform.position = new Vector3(0.739f, 8.13f, -28.86f);
-            spotLight.GetComponent<Light>().spotAngle = 60;
-        }
-        else
-        {
-            PickupObject();
-            spotLight.transform.position = new Vector3(gameObject.transform.position.x, 8.13f, gameObject.transform.position.z);
-            spotLight.GetComponent<Light>().spotAngle = 30;
+            if (isCarrying)
+            {
+                CarryObject(carriedObj);
+                DropObject();
+                spotLight.transform.position = new Vector3(0.739f, 8.13f, -28.86f);
+                spotLight.GetComponent<Light>().spotAngle = 60;
+            }
+            else
+            {
+                PickupObject();
+                spotLight.transform.position = new Vector3(gameObject.transform.position.x, 8.13f, gameObject.transform.position.z);
+                spotLight.GetComponent<Light>().spotAngle = 30;
+            }
         }
     }
 
@@ -61,38 +66,41 @@ public class Pickup : MonoBehaviour
 
     private void PickupObject()
     {
-        int x = Screen.width / 2;
-        int y = Screen.height / 2;
-
-        Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(new Vector3(x, y, 0.0f));
-        RaycastHit hit;
-
-        //Change reticle colour for detection
-        if (Physics.Raycast(ray, out hit, 4))
+        if (!playerMovement.vrEnabled)
         {
-            if (hit.collider.tag == "Pickup")
-                reticle.color = Color.green;
-            else
-                reticle.color = Color.white;
+            int x = Screen.width / 2;
+            int y = Screen.height / 2;
 
-            if (Input.GetMouseButtonDown(0))
+            Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(new Vector3(x, y, 0.0f));
+            RaycastHit hit;
+
+            //Change reticle colour for detection
+            if (Physics.Raycast(ray, out hit, 4))
             {
                 if (hit.collider.tag == "Pickup")
+                    reticle.color = Color.green;
+                else
+                    reticle.color = Color.white;
+
+                if (Input.GetMouseButtonDown(0))
                 {
-                    isCarrying = true;
-                    carriedObj = hit.collider.gameObject;
-                    hit.collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                    if (hit.collider.tag == "Pickup")
+                    {
+                        isCarrying = true;
+                        carriedObj = hit.collider.gameObject;
+                        hit.collider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-                    //Object sound stuff
-                    carriedObj.GetComponentInChildren<AudioSource>().Stop();
-                    //Goal sound stuff
-                    goal.source.Stop();
-                    goal.source.loop = true;
-                    goal.source.clip = goal.clipList[0];
-                    goal.source.Play();
+                        //Object sound stuff
+                        carriedObj.GetComponentInChildren<AudioSource>().Stop();
+                        //Goal sound stuff
+                        goal.source.Stop();
+                        goal.source.loop = true;
+                        goal.source.clip = goal.clipList[0];
+                        goal.source.Play();
+                    }
                 }
-            }
 
+            }
         }
     }
 

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1884753802128950325}
   - component: {fileID: 2315652181216781305}
   - component: {fileID: 7838664101776995149}
+  - component: {fileID: 8653566204752507380}
   m_Layer: 0
   m_Name: Pickup2
   m_TagString: Pickup
@@ -127,6 +128,8 @@ MonoBehaviour:
   reticle: {fileID: 0}
   distance: 3
   smoother: 5
+  spotLight: {fileID: 0}
+  playerMovement: {fileID: 0}
 --- !u!82 &7838664101776995149
 AudioSource:
   m_ObjectHideFlags: 0
@@ -250,3 +253,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &8653566204752507380
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5504151608749062088}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.7
+  m_Center: {x: 0, y: 0, z: 0}

@@ -13,6 +13,11 @@ public class CameraScript : MonoBehaviour
 
     private bool mouseHidden;
 
+    public PlayerMovement playerMovement;
+
+    //VR stuff
+    public Transform vrCameraTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,15 +33,19 @@ public class CameraScript : MonoBehaviour
         //Variables to simplify code
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        
+        if (!playerMovement.vrEnabled)
+        {
+            //Decrease x rotation by mouse y every frame
+            xRotation -= mouseY;
+            //Clamp rotation
+            xRotation = Mathf.Clamp(xRotation, -90.0f, 90.0f);
 
-        //Decrease x rotation by mouse y every frame
-        xRotation -= mouseY;
-        //Clamp rotation
-        xRotation = Mathf.Clamp(xRotation, -90.0f, 90.0f);
+            //Camera movement code
+            transform.localRotation = Quaternion.Euler(xRotation, 0.0f, 0.0f);
 
-        //Camera movement code
-        transform.localRotation = Quaternion.Euler(xRotation, 0.0f, 0.0f);
-        playerBody.Rotate(Vector3.up * mouseX);
+            playerBody.Rotate(Vector3.up * mouseX);
+        }
 
         //Make cursor unlocked and visible
         if (Input.GetKeyUp(KeyCode.KeypadEnter) && mouseHidden == true)

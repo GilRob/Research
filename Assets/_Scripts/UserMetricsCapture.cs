@@ -125,6 +125,10 @@ public class UserMetricsCapture : MonoBehaviour
         //Put together information for download
         if (downloadTime && notDownloaded)
         {
+            //Make mouse visible
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             endTime = System.DateTime.Now.ToLongTimeString();
 
             string downloadText = 
