@@ -1388,21 +1388,6 @@ PrefabInstance:
       propertyPath: spotLight
       value: 
       objectReference: {fileID: 142811008}
-    - target: {fileID: 2315652181216781305, guid: ca6077c405dcaa54da544798d3bdf844,
-        type: 3}
-      propertyPath: playerMovement
-      value: 
-      objectReference: {fileID: 777302787}
-    - target: {fileID: 4311131502031633206, guid: ca6077c405dcaa54da544798d3bdf844,
-        type: 3}
-      propertyPath: MaxDistance
-      value: 17.33281
-      objectReference: {fileID: 0}
-    - target: {fileID: 4311131502031633206, guid: ca6077c405dcaa54da544798d3bdf844,
-        type: 3}
-      propertyPath: MinDistance
-      value: 1.5721397
-      objectReference: {fileID: 0}
     - target: {fileID: 5504151608749062088, guid: ca6077c405dcaa54da544798d3bdf844,
         type: 3}
       propertyPath: m_Name
@@ -4967,7 +4952,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 200
   playerBody: {fileID: 777302786}
-  playerMovement: {fileID: 777302787}
   vrCameraTransform: {fileID: 1613543261}
 --- !u!81 &1613543265
 AudioListener:

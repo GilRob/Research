@@ -24,7 +24,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 move;
 
-    public bool vrEnabled;
+    //public static bool vrEnabled;
+
+    private StartingScript starting;
 
     bool isRotating = false;
 
@@ -33,9 +35,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        if (XRDevice.isPresent)
+        starting = GameObject.Find("Starter").GetComponent<StartingScript>();
+
+        if (starting.vrEnabled || XRDevice.isPresent)
         {
-            vrEnabled = true;
+            starting.vrEnabled = true;
             GameObject.Find("handL").SetActive(true);
             GameObject.Find("handR").SetActive(true);
             GameObject.Find("Cameras").SetActive(true);
@@ -45,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            vrEnabled = false;
+            starting.vrEnabled = false;
             GameObject.Find("handL").SetActive(false);
             GameObject.Find("handR").SetActive(false);
             GameObject.Find("Cameras").SetActive(false);
@@ -54,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
             GameObject.Find("WebXRCameraSet").SetActive(false);*/
         }
 
-        Debug.Log(vrEnabled);
+        Debug.Log(starting.vrEnabled);
     }
     // Update is called once per frame
     void Update()
@@ -74,13 +78,13 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Movement has to be local
-        if (!vrEnabled)
+        if (!starting.vrEnabled)
         {
             move = transform.right * x + transform.forward * z;
         }
 
         //For VR movement
-        if (vrEnabled)
+        if (starting.vrEnabled)
         {
             //Movement has to be local
             move = vrCameraTransform.right * x + vrCameraTransform.forward * z;
@@ -93,9 +97,9 @@ public class PlayerMovement : MonoBehaviour
             transform.Rotate(0f, 45f, 0f);
             isRotating = true;
         }
-        if (rotation == 0)
+        else if (rotation == 0 && isRotating)
             isRotating = false;
-        if (rotation < 0 && !isRotating)
+        else if (rotation < 0 && !isRotating)
         {
             transform.Rotate(0f, -45f, 0f);
             isRotating = true;

@@ -13,7 +13,8 @@ public class CameraScript : MonoBehaviour
 
     private bool mouseHidden;
 
-    public PlayerMovement playerMovement;
+    //public PlayerMovement playerMovement;
+    private StartingScript starting;
 
     //VR stuff
     public Transform vrCameraTransform;
@@ -21,6 +22,8 @@ public class CameraScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        starting = GameObject.Find("Starter").GetComponent<StartingScript>();
+
         //Lock cursor to the screen and hide it
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -34,7 +37,7 @@ public class CameraScript : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
         
-        if (!playerMovement.vrEnabled)
+        if (!starting.vrEnabled)
         {
             //Decrease x rotation by mouse y every frame
             xRotation -= mouseY;

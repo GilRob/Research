@@ -20,11 +20,14 @@ public class Pickup : MonoBehaviour
 
     public GameObject spotLight;
 
-    public PlayerMovement playerMovement;
+    //public PlayerMovement playerMovement;
+    private StartingScript starting;
 
     // Start is called before the first frame update
     void Start()
     {
+        starting = GameObject.Find("Starter").GetComponent<StartingScript>();
+
         goal = GameObject.Find("Goal").GetComponent<Goal>();
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
         player = GameObject.Find("Player");
@@ -41,7 +44,7 @@ public class Pickup : MonoBehaviour
         {
             gameObject.GetComponent<AudioSource>().enabled = true;
         }
-        if (!playerMovement.vrEnabled)
+        if (!starting.vrEnabled)
         {
             if (isCarrying)
             {
@@ -66,7 +69,7 @@ public class Pickup : MonoBehaviour
 
     private void PickupObject()
     {
-        if (!playerMovement.vrEnabled)
+        if (!starting.vrEnabled)
         {
             int x = Screen.width / 2;
             int y = Screen.height / 2;

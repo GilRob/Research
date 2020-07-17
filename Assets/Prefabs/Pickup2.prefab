@@ -127,9 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reticle: {fileID: 0}
   distance: 3
-  smoother: 5
+  smoother: 7
   spotLight: {fileID: 0}
-  playerMovement: {fileID: 0}
 --- !u!82 &7838664101776995149
 AudioSource:
   m_ObjectHideFlags: 0
