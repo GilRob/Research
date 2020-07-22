@@ -2987,7 +2987,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 108833362, guid: 85d0dd2119dd88a4fa20d8b3477f7d38, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 108833364, guid: 85d0dd2119dd88a4fa20d8b3477f7d38, type: 3}
       propertyPath: spotLight
@@ -3003,7 +3003,7 @@ PrefabInstance:
       objectReference: {fileID: 142811008}
     - target: {fileID: 1926307847, guid: 85d0dd2119dd88a4fa20d8b3477f7d38, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1926307849, guid: 85d0dd2119dd88a4fa20d8b3477f7d38, type: 3}
       propertyPath: spotLight
@@ -3038,7 +3038,7 @@ PrefabInstance:
         type: 3}
       propertyPath: vrCameraTransform
       value: 
-      objectReference: {fileID: 1613543261}
+      objectReference: {fileID: 0}
     - target: {fileID: 1357959981763761091, guid: 85d0dd2119dd88a4fa20d8b3477f7d38,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -3118,11 +3118,11 @@ PrefabInstance:
         type: 3}
       propertyPath: vrCameraTransform
       value: 
-      objectReference: {fileID: 1613543261}
+      objectReference: {fileID: 0}
     - target: {fileID: 6793973245293618673, guid: 85d0dd2119dd88a4fa20d8b3477f7d38,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7026019362598309076, guid: 85d0dd2119dd88a4fa20d8b3477f7d38,
         type: 3}
@@ -4926,41 +4926,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15.944698, y: 4.3838615, z: 9.430243}
   m_Center: {x: -5.0255203, y: 1.6919308, z: -9.862329}
---- !u!1 &1613543260 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5387130906997304286, guid: 85d0dd2119dd88a4fa20d8b3477f7d38,
-    type: 3}
-  m_PrefabInstance: {fileID: 1257494499}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1613543261 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2660533711885198069, guid: 85d0dd2119dd88a4fa20d8b3477f7d38,
-    type: 3}
-  m_PrefabInstance: {fileID: 1257494499}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1613543262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613543260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bca850f16c332a4409ca37c813ef7176, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSensitivity: 200
-  playerBody: {fileID: 777302786}
-  vrCameraTransform: {fileID: 1613543261}
---- !u!81 &1613543265
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613543260}
-  m_Enabled: 1
 --- !u!1 &1622229558
 GameObject:
   m_ObjectHideFlags: 0

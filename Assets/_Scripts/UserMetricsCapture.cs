@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class WebDownloadHelper
 {
@@ -165,7 +166,13 @@ public class UserMetricsCapture : MonoBehaviour
 
             Debug.Log(downloadText);
 
-            WebDownloadHelper.InitiateDownload("User Metrics.csv", downloadText);              
+            //WebDownloadHelper.InitiateDownload("User Metrics.csv", downloadText);  
+
+            string path = "User Metrics.csv";
+
+            StreamWriter writer = new StreamWriter(path);
+            writer.WriteLine(downloadText);
+            writer.Close();
 
             notDownloaded = false;
         }
