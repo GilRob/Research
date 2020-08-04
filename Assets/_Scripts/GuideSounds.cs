@@ -26,12 +26,17 @@ public class GuideSounds : MonoBehaviour
 
     public int randomNum = 0;
 
+    private StartingScript starting;
+
     // Start is called before the first frame update
     void Start()
     {
         goal = GameObject.Find("Goal").GetComponent<Goal>();
         guide = GameObject.Find("Source1");
         door = GameObject.Find("Door");
+
+        starting = GameObject.Find("Starter").GetComponent<StartingScript>();
+
         //Disable collider initially. Have it enabled once they register
         guide.GetComponent<BoxCollider>().enabled = false;
         guide.GetComponent<AudioSource>().enabled = false;
@@ -42,6 +47,17 @@ public class GuideSounds : MonoBehaviour
 
         randomNum = Random.Range(1, 4);
         Debug.Log(randomNum);
+
+        if (!starting.vrEnabled)
+        {
+            this.gameObject.GetComponent<AudioSource>().clip = clipList[4];
+            this.gameObject.GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            this.gameObject.GetComponent<AudioSource>().clip = clipList[5];
+            this.gameObject.GetComponent<AudioSource>().Play();
+        }
 
         if (randomNum == 1)
         {

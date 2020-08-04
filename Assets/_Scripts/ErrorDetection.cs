@@ -8,11 +8,12 @@ public class ErrorDetection : MonoBehaviour
 
     public UserMetricsCapture userMetrics;
 
+    private GameObject wallAudio;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        wallAudio = GameObject.Find("Wall Audio");
     }
 
     // Update is called once per frame
@@ -27,11 +28,20 @@ public class ErrorDetection : MonoBehaviour
         {
             if (!soundPlaying)
             {
-                other.gameObject.GetComponent<AudioSource>().Play();
+                //Vector3 soundPos;
+                //other.gameObject.GetComponentInChildren<Transform>().transform.localPosition = new Vector3(wallAudio.transform.position.x, wallAudio.transform.position.y, this.gameObject.transform.position.z);
+                wallAudio.transform.position = new Vector3(this.gameObject.transform.position.x, other.gameObject.transform.position.y, this.gameObject.transform.position.z);
+                Debug.Log(wallAudio.transform.position);
+                //soundPos = this.gameObject.transform.position - wallAudio.transform.position;
+
+                //wallAudio.transform.position = soundPos;
+                //Debug.Log(soundPos);
+                wallAudio.GetComponent<AudioSource>().Play();
+                //other.gameObject.GetComponentInChildren<AudioSource>().Play();
                 soundPlaying = true;
-                //Debug.Log("COLLIDE");
+                Debug.Log("COLLIDE");
             }
-            if (other.gameObject.GetComponent<AudioSource>().isPlaying == false)
+            if (wallAudio.GetComponent<AudioSource>().isPlaying == false)
                 soundPlaying = false;
         }
     }
@@ -48,7 +58,8 @@ public class ErrorDetection : MonoBehaviour
     {
         if (other.tag == "Wall")
         {
-            other.gameObject.GetComponent<AudioSource>().Stop();
+            wallAudio.GetComponent<AudioSource>().Stop();
+            //other.gameObject.GetComponentInChildren<AudioSource>().Stop();
             userMetrics.numWallCollisions++;
         }
     }

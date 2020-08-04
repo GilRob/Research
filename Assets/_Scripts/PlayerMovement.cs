@@ -37,12 +37,12 @@ public class PlayerMovement : MonoBehaviour
     {
         starting = GameObject.Find("Starter").GetComponent<StartingScript>();
 
-        if (starting.vrEnabled || XRDevice.isPresent)
+        if (starting.vrEnabled && XRDevice.isPresent)
         {
             starting.vrEnabled = true;
-            GameObject.Find("handL").SetActive(true);
-            GameObject.Find("handR").SetActive(true);
-            GameObject.Find("Cameras").SetActive(true);
+            GameObject.Find("OVRCameraRig").SetActive(true);
+            GameObject.Find("LocalAvatar").SetActive(true);
+            //GameObject.Find("Cameras").SetActive(true);
             GameObject.Find("Camera").SetActive(false);
             /*GameObject.Find("Player").SetActive(false);
             GameObject.Find("WebXRCameraSet").SetActive(true);*/
@@ -50,9 +50,9 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             starting.vrEnabled = false;
-            GameObject.Find("handL").SetActive(false);
-            GameObject.Find("handR").SetActive(false);
-            GameObject.Find("Cameras").SetActive(false);
+            GameObject.Find("OVRCameraRig").SetActive(false);
+            GameObject.Find("LocalAvatar").SetActive(false);
+            //GameObject.Find("Cameras").SetActive(false);
             GameObject.Find("Camera").SetActive(true);
             /*GameObject.Find("Player").SetActive(true);
             GameObject.Find("WebXRCameraSet").SetActive(false);*/

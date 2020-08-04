@@ -20,6 +20,9 @@ public class Pickup : MonoBehaviour
 
     public GameObject spotLight;
 
+    public AudioSource triggerSound;
+    private bool soundPlayed = false;
+
     //public PlayerMovement playerMovement;
     private StartingScript starting;
 
@@ -81,9 +84,19 @@ public class Pickup : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 4))
             {
                 if (hit.collider.tag == "Pickup")
+                {
                     reticle.color = Color.green;
+                    if (!soundPlayed)
+                    {
+                        triggerSound.Play();
+                        soundPlayed = true;                        
+                    }
+                }
                 else
+                {
                     reticle.color = Color.white;
+                    soundPlayed = false;
+                }             
 
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -102,7 +115,6 @@ public class Pickup : MonoBehaviour
                         goal.source.Play();
                     }
                 }
-
             }
         }
     }
